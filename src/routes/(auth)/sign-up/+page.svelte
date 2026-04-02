@@ -163,7 +163,7 @@
               <Button
                 type="button"
                 class="w-full rounded-xs border border-primary/25 bg-white px-4 py-3 font-medium text-primary-dark transition-colors hover:border-primary/45 hover:bg-primary/5 disabled:cursor-not-allowed disabled:opacity-60"
-                 onclick={() => signInWithGoogle()}
+                onclick={() => signInWithGoogle("/")}
               >
                 <img src={googleIcons} alt="Google Logo" class="h-5 w-5" />
                 Daftar dengan Google

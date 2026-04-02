@@ -1,6 +1,8 @@
 <script lang="ts">
   import Button from "$lib/components/ui/button/button.svelte";
   import Input from "$lib/components/ui/input/input.svelte";
+  import { signInWithGoogle } from "$lib/auth-client";
+  import { signInWithEmail } from "$lib/sign-in";
   
   import googleIcons from "$lib/assets/svg/google-logo_svgstack_com_50421775096902.svg"
 
@@ -23,39 +25,31 @@
     errorMessage = null;
     isSubmitting = true;
 
-    try {
-      // const result = await signInWithEmail({
-      //   email,
-      //   password,
-      //   callbackURL: "/",
-      // });
+    const result = await signInWithEmail({
+      email,
+      password,
+      callbackURL: "/dashboard",
+    });
 
-      // if (!result.ok) {
-      //   const error = result.error ?? "Gagal masuk. Coba lagi.";
-      //   errorMessage = error;
-      //   isSubmitting = false;
-      //   return;
-      // }
-
-      // window.location.assign("/");
-    } catch (error) {
-      const errorMsg = error instanceof Error ? error.message : "Gagal masuk. Coba lagi.";
-      errorMessage = errorMsg;
+    if (!result.ok) {
+      const error = result.error ?? "Gagal masuk. Coba lagi.";
+      errorMessage = error;
       isSubmitting = false;
+      return;
     }
   }
 </script>
 
-<main class="h-screen w-full bg-gray-100 p-4">
-  <div class="flex h-full w-full gap-5">
+<main class="h-screen w-full bg-gray-100 p-3 md:p-4">
+  <div class="flex h-full w-full gap-4 md:gap-5">
     <!-- Left -->
-    <div class="flex flex-1/5 flex-col justify-center rounded-xl bg-white p-6 md:p-4">
+    <div class="flex flex-1/5 flex-col rounded-xl bg-white p-5 md:p-6">
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>logo</div>
         <p class="text-sm font-medium text-secondary-dark/90">
           Masih belum punya akun?{" "}
-          <a href="/register" class="cursor-pointer font-semibold text-primary transition-colors hover:text-primary-hover">
+          <a href="/sign-up" class="cursor-pointer font-semibold text-primary transition-colors hover:text-primary-hover">
             Buat akun
           </a>
         </p>
@@ -64,7 +58,7 @@
       <!-- Content -->
       <div class="flex flex-1 items-center justify-center">
         <div class="w-full max-w-lg">
-          <div class="w-full space-y-5">
+          <div class="w-full space-y-4">
             <div class="space-y-1.5 text-start">
               <h1 class="text-3xl font-bold tracking-tight text-primary-dark md:text-4xl">Selamat datang kembali</h1>
               <p class="text-sm font-medium text-secondary-dark/90">Lanjutkan perjalanan mengatur keuanganmu dengan lebih rapi dan terkontrol.</p>
@@ -108,19 +102,11 @@
                   </div>
                 </div>
 
-                <!-- Spacer untuk form 3-field register page -->
-                <div class="invisible space-y-1.5">
-                  <div class="block text-sm font-medium text-secondary-dark">
-                    Placeholder
-                  </div>
-                  <div class="h-9"></div>
-                </div>
-
                 {#if errorMessage}
                   <p class="text-sm text-red-500 min-h-5">{errorMessage}</p>
                 {/if}
 
-                <Button type="submit" class="h-10 w-full rounded-xs" disabled={isSubmitting}>
+                <Button type="submit" class="h-10 mt-4 w-full rounded-xs" disabled={isSubmitting}>
                   {isSubmitting ? "Memproses..." : "Masuk"}
                 </Button>
               </div>
@@ -133,7 +119,11 @@
             </div>
 
             <div class="flex">
-              <Button type="button" class="w-full rounded-xs border border-primary/25 bg-white px-4 py-3 font-medium text-primary-dark transition-colors hover:border-primary/45 hover:bg-primary/5 disabled:cursor-not-allowed disabled:opacity-60">
+              <Button
+                type="button"
+                class="w-full rounded-xs border border-primary/25 bg-white px-4 py-3 font-medium text-primary-dark transition-colors hover:border-primary/45 hover:bg-primary/5 disabled:cursor-not-allowed disabled:opacity-60"
+                onclick={() => signInWithGoogle()}
+              >
                 <img src={googleIcons} alt="Google Logo" class="h-5 w-5" />
                 Masuk dengan Google
               </Button>
@@ -142,7 +132,7 @@
         </div>
       </div>
 
-      <div class="flex w-full items-center justify-center py-4">
+      <div class="flex w-full items-center justify-center pt-6 md:pt-8">
         <p class="text-sm text-secondary-dark">&copy; {currentYear} Arthaku, All rights reserved</p>
       </div>
     </div>
