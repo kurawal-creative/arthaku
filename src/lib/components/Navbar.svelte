@@ -3,8 +3,8 @@
 	import LogOut from "@lucide/svelte/icons/log-out";
 	import { authClient } from "$lib/auth-client";
 	import { signOut } from "$lib/sign-out";
-	import ModeToggle from "./ModeToggle.svelte";
-	import SearchToggle from "./SearchToggle.svelte";
+	import ModeToggle from "$lib/components/ModeToggle.svelte";
+	import SearchToggle from "$lib/components/SearchToggle.svelte";
 
 	const session = authClient.useSession();
 	const isLoggedIn = $derived(Boolean($session.data?.user));
