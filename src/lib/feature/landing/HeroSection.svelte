@@ -13,14 +13,14 @@
 	<div class="mt-8">
 		<div class="flex gap-2 items-center">
 			<a
-				href="/"
+				href="/docs"
 				class="rounded-xs px-3 py-2 border-2 border-primary hover:border-primary-hover hover:bg-primary/5 shadow-sm transition-all duration-300 font-semibold text-primary"
 			>
 				Dokumentasi Kami
 			</a>
 
 			<a
-				href="/"
+				href="/login"
 				class="rounded-xs px-3 py-2 border-2 border-primary hover:border-primary-hover bg-primary hover:bg-primary-hover transition-all duration-300 font-semibold shadow-sm text-white"
 			>
 				Coba Sekarang
