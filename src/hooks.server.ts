@@ -4,12 +4,20 @@ import { building } from '$app/environment';
 import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
-    // 1. Ambil session terlebih dahulu
+    const pathname = event.url.pathname;
+    const isAuthApiRoute = pathname.startsWith('/api/auth');
+    const isDashboardRoute = pathname === '/dashboard' || pathname.startsWith('/dashboard/');
+    const isAuthPageRoute = pathname === '/login' || pathname.startsWith('/login/') || pathname === '/sign-up' || pathname.startsWith('/sign-up/');
+
+    if (isAuthApiRoute) {
+        return svelteKitHandler({ event, resolve, auth, building });
+    }
+
+    // Ambil session sekali untuk proteksi dashboard dan redirect dari auth pages.
     const session = await auth.api.getSession({
         headers: event.request.headers,
     });
 
-    // 2. Isi event.locals agar bisa digunakan di server (layout.server.ts, actions, dll)
     if (session) {
         // @ts-ignore
         event.locals.user = session.user;
@@ -17,14 +25,13 @@ export const handle: Handle = async ({ event, resolve }) => {
         event.locals.session = session.session;
     }
 
-    // 3. Cek proteksi route
-    const pathname = event.url.pathname;
-    const isDashboardRoute = pathname === '/dashboard' || pathname.startsWith('/dashboard/');
+    if (session && isAuthPageRoute) {
+        return Response.redirect(new URL('/dashboard', event.url), 303);
+    }
 
     if (isDashboardRoute && !session) {
         return Response.redirect(new URL('/login', event.url), 303);
     }
 
-    // 4. Gunakan svelteKitHandler untuk menangani request Better Auth
     return svelteKitHandler({ event, resolve, auth, building });
 };
