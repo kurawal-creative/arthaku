@@ -1,8 +1,8 @@
-import { betterAuth } from "better-auth";
-import { PrismaClient } from "@prisma/client";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import { sveltekitCookies } from "better-auth/svelte-kit";
-import { getRequestEvent } from "$app/server";
+import { betterAuth } from 'better-auth';
+import { PrismaClient } from '@prisma/client';
+import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { sveltekitCookies } from 'better-auth/svelte-kit';
+import { getRequestEvent } from '$app/server';
 
 function requireEnv(
   key:
@@ -26,20 +26,20 @@ const betterAuthUrl = process.env.BETTER_AUTH_URL ?? "http://localhost:5173";
 const prisma = new PrismaClient();
 
 export const auth = betterAuth({
-  baseURL: betterAuthUrl,
-  secret: betterAuthSecret,
-  database: prismaAdapter(prisma, {
-    provider: "mongodb",
-  }),
-  emailAndPassword: {
-    enabled: true,
-  },
-  socialProviders: {
-    google: {
-      prompt: "select_account",
-      clientId: requireEnv("GOOGLE_CLIENT_ID"),
-      clientSecret: requireEnv("GOOGLE_CLIENT_SECRET"),
+    baseURL: betterAuthUrl,
+    secret: betterAuthSecret,
+    database: prismaAdapter(prisma, {
+        provider: 'mongodb',
+    }),
+    emailAndPassword: {
+        enabled: true,
     },
-  },
-  plugins: [sveltekitCookies(getRequestEvent)],
+    socialProviders: {
+        google: {
+            prompt: 'select_account',
+            clientId: requireEnv('GOOGLE_CLIENT_ID'),
+            clientSecret: requireEnv('GOOGLE_CLIENT_SECRET'),
+        },
+    },
+    plugins: [sveltekitCookies(getRequestEvent)],
 });
