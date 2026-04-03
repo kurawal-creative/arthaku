@@ -1,9 +1,6 @@
 import { betterAuth } from 'better-auth';
-import { configureNodeDns } from './dns-config';
 import { PrismaClient } from '@prisma/client';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-
-configureNodeDns();
 
 function requireEnv(key: 'DATABASE_URL' | 'BETTER_AUTH_SECRET' | 'GOOGLE_CLIENT_ID' | 'GOOGLE_CLIENT_SECRET') {
     const value = process.env[key];
