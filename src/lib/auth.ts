@@ -1,6 +1,8 @@
 import { betterAuth } from 'better-auth';
 import { PrismaClient } from '@prisma/client';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { sveltekitCookies } from "better-auth/svelte-kit";
+import { getRequestEvent } from "$app/server";
 
 function requireEnv(key: 'DATABASE_URL' | 'BETTER_AUTH_SECRET' | 'GOOGLE_CLIENT_ID' | 'GOOGLE_CLIENT_SECRET') {
     const value = process.env[key];
@@ -33,4 +35,5 @@ export const auth = betterAuth({
             clientSecret: requireEnv('GOOGLE_CLIENT_SECRET'),
         },
     },
+    sveltekitCookies(getRequestEvent),
 });
