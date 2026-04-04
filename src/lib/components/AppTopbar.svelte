@@ -4,7 +4,7 @@
   import SearchDashboard from "./SearchDashboard.svelte";
 </script>
 
-<nav class="w-full bg-white">
+<nav class="w-full bg-white mb-6">
   <div class="flex items-center justify-between gap-4">
     <!-- Left -->
     <SearchDashboard />
