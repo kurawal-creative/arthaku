@@ -58,7 +58,7 @@
 
     <div class="sticky top-15 -mt-22 mx-auto flex h-[calc(100vh-3rem)] w-full items-end justify-center">
       <div class="relative w-[clamp(320px,35vw,440px)]">
-        <img src={mock} alt="mockup" draggable="false" class="relative left-[11%] z-30 h-auto w-full" />
+        <enhanced:img src={mock} alt="mockup" draggable="false" class="relative left-[11%] z-30 h-auto w-full" />
 
         <div class="absolute left-[24%] top-[2.5%] z-20 h-[81%] w-[52%] overflow-hidden rounded-[2rem] bg-red-600 p-4">
           <div style={`transform: translateY(${redContentY}px);`} class="space-y-3 text-white">
@@ -74,11 +74,57 @@
           </div>
         </div>
 
-        <div class="absolute z-40 -left-[clamp(9rem,14vw,14rem)] top-[12%] rounded-xl border border-primary/15 bg-white px-4 py-2 shadow-md transition-all duration-450 ease-out" style={`opacity: ${showLeftTop ? 1 : 0}; transform: translateX(${showLeftTop ? 0 : -24}px);`}>Catat jajan harian</div>
-        <div class="absolute z-40 -left-[clamp(11rem,16vw,16rem)] top-[58%] rounded-xl border border-primary/15 bg-white px-4 py-2 shadow-md transition-all duration-450 ease-out" style={`opacity: ${showLeftBottom ? 1 : 0}; transform: translateX(${showLeftBottom ? 0 : -24}px);`}>Budget tetap aman</div>
+        <!-- Left Top -->
+        <div class="absolute z-40 -left-[clamp(10.5rem,16vw,16rem)] top-[12%] flex w-80 justify-between rounded-2xl border border-primary/20 bg-white/95 p-3 shadow-md backdrop-blur-[1px] transition-all duration-450 ease-out" style={`opacity: ${showLeftTop ? 1 : 0}; transform: translateX(${showLeftTop ? 0 : -24}px);`}>
+          <div class="flex items-start gap-2.5">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">AK</div>
+            <div class="flex flex-col">
+              <p class="text-primary-dark text-sm font-semibold">Transaksi baru tercatat</p>
+              <p class="text-secondary-dark text-xs mt-1">Makan siang - Rp 25.000</p>
+              <p class="mt-1.5 inline-flex w-fit rounded-full bg-green-50 px-2 py-0.5 text-[11px] font-medium text-green-700">Sinkron otomatis</p>
+            </div>
+          </div>
+          <div class="text-secondary-dark text-xs">2 mnt lalu</div>
+        </div>
 
-        <div class="absolute z-40 -right-[clamp(10rem,15vw,15rem)] top-[23%] rounded-xl border border-primary/15 bg-white px-4 py-2 shadow-md transition-all duration-450 ease-out" style={`opacity: ${showRightTop ? 1 : 0}; transform: translateX(${showRightTop ? 0 : 24}px);`}>Laporan otomatis</div>
-        <div class="absolute z-40 -right-[clamp(8rem,13vw,13rem)] top-[70%] rounded-xl border border-primary/15 bg-white px-4 py-2 shadow-md transition-all duration-450 ease-out" style={`opacity: ${showRightBottom ? 1 : 0}; transform: translateX(${showRightBottom ? 0 : 24}px);`}>Reminder mingguan</div>
+        <!-- Left Bottom -->
+        <div class="absolute z-40 -left-[clamp(13rem,19vw,19rem)] top-[58%] flex w-80 justify-between rounded-2xl border border-primary/20 bg-white/95 p-3 shadow-md backdrop-blur-[1px] transition-all duration-450 ease-out" style={`opacity: ${showLeftBottom ? 1 : 0}; transform: translateX(${showLeftBottom ? 0 : -24}px);`}>
+          <div class="flex items-start gap-2.5">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">AK</div>
+            <div class="flex flex-col">
+              <p class="text-primary-dark text-sm font-semibold">Budget mingguan aman</p>
+              <p class="text-secondary-dark text-xs mt-1">Sisa Rp 315.000 dari target</p>
+              <p class="mt-1.5 inline-flex w-fit rounded-full bg-yellow-50 px-2 py-0.5 text-[11px] font-medium text-yellow-700">Terkendali</p>
+            </div>
+          </div>
+          <div class="text-secondary-dark text-xs">5 jam lalu</div>
+        </div>
+
+        <!-- Right Top -->
+        <div class="absolute z-40 -right-[clamp(11.5rem,17vw,17rem)] top-[23%] flex w-80 justify-between rounded-2xl border border-primary/20 bg-white/95 p-3 shadow-md backdrop-blur-[1px] transition-all duration-450 ease-out" style={`opacity: ${showRightTop ? 1 : 0}; transform: translateX(${showRightTop ? 0 : 24}px);`}>
+          <div class="flex items-start gap-2.5">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">AK</div>
+            <div class="flex flex-col">
+              <p class="text-primary-dark text-sm font-semibold">Laporan arus kas</p>
+              <p class="text-secondary-dark text-xs mt-1">Update otomatis setiap transaksi</p>
+              <p class="mt-1.5 inline-flex w-fit rounded-full bg-blue-50 px-2 py-0.5 text-[11px] font-medium text-blue-700">Realtime</p>
+            </div>
+          </div>
+          <div class="text-secondary-dark text-xs">Baru saja</div>
+        </div>
+
+        <!-- Right Bottom -->
+        <div class="absolute z-40 -right-[clamp(9.5rem,15vw,15rem)] top-[70%] flex w-80 justify-between rounded-2xl border border-primary/20 bg-white/95 p-3 shadow-md backdrop-blur-[1px] transition-all duration-450 ease-out" style={`opacity: ${showRightBottom ? 1 : 0}; transform: translateX(${showRightBottom ? 0 : 24}px);`}>
+          <div class="flex items-start gap-2.5">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">AK</div>
+            <div class="flex flex-col">
+              <p class="text-primary-dark text-sm font-semibold">Reminder evaluasi</p>
+              <p class="text-secondary-dark text-xs mt-1 w-40">Cek progres & review pengeluaran mingguan</p>
+              <p class="mt-1.5 inline-flex w-fit rounded-full bg-purple-50 px-2 py-0.5 text-[11px] font-medium text-purple-700">Notifikasi aktif</p>
+            </div>
+          </div>
+          <div class="text-secondary-dark text-xs">1 hari lalu</div>
+        </div>
       </div>
     </div>
   </div>

@@ -24,9 +24,9 @@
   }
 
   const Navbar = [
-    { name: "Features", href: "#features" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Contact", href: "#contact" },
+    { name: "Fitur", href: "/features" },
+    { name: "Dokumentasi", href: "#docs" },
+    { name: "Kontak Kami", href: "#contact" },
   ];
 </script>
 

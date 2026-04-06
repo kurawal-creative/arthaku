@@ -62,35 +62,29 @@
   <div class="reveal-spacer">
     <div class="sticky top-0 mx-auto flex min-h-screen max-w-4xl items-center bg-transparent px-4 py-20">
       <div class="reveal-shell mx-auto w-full max-w-full">
-        <p
-          class={segments || children
-            ? "mx-auto flex max-w-full flex-wrap justify-center p-5 text-2xl font-bold text-primary md:p-8 md:text-3xl lg:p-10 lg:text-4xl"
-            : "mx-auto flex max-w-full flex-wrap justify-center p-5 text-2xl font-bold text-black/20 dark:text-white/20 md:p-8 md:text-3xl lg:p-10 lg:text-4xl"}
-        >
+        <p class={segments || children ? "relative z-10 mx-auto flex max-w-full flex-wrap justify-center p-5 text-2xl font-bold text-primary md:p-8 md:text-3xl lg:p-10 lg:text-4xl" : "mx-auto flex max-w-full flex-wrap justify-center p-5 text-2xl font-bold text-black/20 dark:text-white/20 md:p-8 md:text-3xl lg:p-10 lg:text-4xl"}>
           {#if segments}
             {#each segments as segment, i}
               {@const localProgress = wordProgress(i)}
-              <span
-                class={segment.accent ? "mx-1 inline-block text-accent" : "mx-1 inline-block text-primary"}
-                style={`opacity: ${0.2 + localProgress * 0.8};`}
-              >
+              <span class={segment.accent ? "mx-1 inline-block text-accent" : "mx-1 inline-block text-primary"} style={`opacity: ${0.2 + localProgress * 0.8};`}>
                 {segment.text}
               </span>
             {/each}
-          {:else if children}
-            {@render children()}
           {:else}
             {#each words as item, i}
               {@const localProgress = wordProgress(i)}
-              <span
-                class="mx-1 inline-block"
-                style={`opacity: ${0.2 + localProgress * 0.8};`}
-              >
+              <span class="mx-1 inline-block" style={`opacity: ${0.2 + localProgress * 0.8};`}>
                 {item}
               </span>
             {/each}
           {/if}
         </p>
+
+        {#if children}
+          <div class="pointer-events-none absolute inset-x-0 top-[8%] z-20 flex justify-center md:top-[12%]">
+            {@render children()}
+          </div>
+        {/if}
       </div>
     </div>
   </div>
@@ -103,6 +97,7 @@
   }
 
   .reveal-shell {
-    overflow: hidden;
+    position: relative;
+    overflow: visible;
   }
 </style>
