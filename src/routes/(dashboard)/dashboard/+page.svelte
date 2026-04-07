@@ -14,9 +14,18 @@
     <IncomeAndExpenditureChartDashboard />
   </div>
 
-  <div class="grid grid-cols-3 gap-4">
-    <div class="col-span-2"><FilterChartDashboard /></div>
-    <div class="row-span-2"><HistoryTransactionDashboard /></div>
-    <div class="border col-span-2">4</div>
+  <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+    <div class="col-span-1 xl:col-span-7">
+      <div class="grid grid-cols-1 space-y-4">
+        <FilterChartDashboard />
+        <div class="border">3</div>
+      </div>
+    </div>
+    <div class="col-span-1 xl:col-span-5">
+      <div class="grid grid-cols-1 space-y-4">
+        <HistoryTransactionDashboard />
+        <div class="border">4</div>
+      </div>
+    </div>
   </div>
 </main>
