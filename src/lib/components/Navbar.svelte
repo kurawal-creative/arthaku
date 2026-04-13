@@ -34,7 +34,7 @@
   <div class="max-w-7xl mx-auto w-full px-4">
     <div class="grid h-16 grid-cols-3 items-center">
       <div class="flex items-center">
-        <span class="text-xl font-bold text-primary">Arthaku</span>
+        <a href="/" class="text-xl font-bold text-primary">Arthaku</a>
       </div>
 
       <div class="flex justify-center gap-4">
