@@ -1,22 +1,58 @@
-<script>
-  import * as Kbd from "$lib/components/ui/kbd/index";
-  import Search from "@lucide/svelte/icons/search";
+<script lang="ts">
+  import { InputGroup, InputGroupAddon, InputGroupInput } from "$lib/components/ui/input-group/index.js";
+  import { Kbd, KbdGroup } from "$lib/components/ui/kbd/index.js";
+  import { useSidebar } from "$lib/components/ui/sidebar/index.js";
+  import SearchIcon from "@lucide/svelte/icons/search";
+
+  let groupRef = $state<HTMLDivElement | null>(null);
+  const sidebar = useSidebar();
+
+  function focusSearchAndOpen() {
+    const input = groupRef?.querySelector<HTMLInputElement>("[data-slot=input-group-control]");
+
+    input?.focus({ preventScroll: true });
+    sidebar.setOpen(true);
+  }
+
+  function onKeydown(e: KeyboardEvent) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      focusSearchAndOpen();
+    }
+  }
 </script>
 
-<div
-  class="flex h-9 w-full max-w-md items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-2 py-0"
->
-  <Search class="w-4 h-4 text-gray-500 shrink-0" />
+<svelte:window onkeydown={onKeydown} />
 
-  <input
-    type="text"
-    placeholder="Search"
-    class="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder:text-gray-400 min-w-0"
-  />
-  
-  <Kbd.Root
-    class="flex items-center text-xs text-gray-400 px-2 py-0.5 bg-gray-50 shrink-0"
-  >
-    Ctrl + K
-  </Kbd.Root>
-</div>
+<InputGroup bind:ref={groupRef}>
+  <InputGroupAddon align="inline-start" class="pl-1.75">
+    <SearchIcon />
+  </InputGroupAddon>
+
+  <InputGroupInput aria-label="Search" name="q" placeholder="Search..." type="search" />
+
+  <InputGroupAddon align="inline-end">
+    <KbdGroup>
+      <Kbd>Ctrl</Kbd>
+      <Kbd>K</Kbd>
+    </KbdGroup>
+  </InputGroupAddon>
+</InputGroup>
+
+<style>
+  :global(input[type="search"]::-webkit-search-cancel-button),
+  :global(input[type="search"]::-webkit-search-decoration),
+  :global(input[type="search"]::-webkit-search-results-button),
+  :global(input[type="search"]::-webkit-search-results-decoration) {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+  }
+
+  :global(input[type="search"]::-ms-clear),
+  :global(input[type="search"]::-ms-reveal) {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+</style>

@@ -13,7 +13,7 @@
       progress: 25,
       progressClass: "bg-rose-500",
       label: "Perlu perhatian",
-      labelClass: "bg-rose-100 text-rose-700",
+      labelClass: "bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300",
     },
     {
       id: "insight-3",
@@ -23,7 +23,7 @@
       progress: 65,
       progressClass: "bg-emerald-500",
       label: "On track",
-      labelClass: "bg-emerald-100 text-emerald-700",
+      labelClass: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
     },
   ];
 </script>
@@ -55,7 +55,7 @@
     <Card.Content class="pt-0 flex-1 min-h-0">
       <div class="h-full overflow-hidden space-y-1.5">
         {#each insights as insight (insight.id)}
-          <div class="rounded-lg border p-4 bg-card/70">
+          <div class="rounded-lg border p-4 bg-card/70 dark:bg-card/90">
             <div class="flex items-start justify-between gap-2">
               <div class="flex items-start gap-2 min-w-0">
                 <span class={`mt-1 inline-block h-2 w-2 rounded-full shrink-0 ${insight.colorClass}`}></span>

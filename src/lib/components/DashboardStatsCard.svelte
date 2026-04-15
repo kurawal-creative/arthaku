@@ -54,14 +54,14 @@
 
 <div class="grid grid-cols-2 gap-4">
   {#each stats as stat}
-    <div class={`rounded-2xl px-4 py-6 shadow-sm overflow-hidden ${stat.highlight ? "bg-primary text-white" : "bg-white text-primary-dark"}`}>
+    <div class={`rounded-2xl px-4 py-6 shadow-sm overflow-hidden ${stat.highlight ? "bg-primary text-white" : "bg-card text-foreground border border-border/60"}`}>
       <!-- Header -->
       <div class="flex justify-between items-start">
-        <p class={`text-sm font-medium ${stat.highlight ? "opacity-90" : "text-gray-500"}`}>
+        <p class={`text-sm font-medium ${stat.highlight ? "opacity-90" : "text-muted-foreground"}`}>
           {stat.title}
         </p>
 
-        <stat.icon class={`w-5 h-5 ${stat.highlight ? "opacity-80" : "text-gray-400"}`} />
+        <stat.icon class={`w-5 h-5 ${stat.highlight ? "opacity-80" : "text-muted-foreground"}`} />
       </div>
 
       <!-- Value -->
@@ -87,11 +87,11 @@
 
         <!-- Conditional text -->
         {#if stat.note}
-          <span class={`${stat.highlight ? "opacity-90" : "text-gray-400"}`}>
+          <span class={`${stat.highlight ? "opacity-90" : "text-muted-foreground"}`}>
             {stat.note}
           </span>
         {:else}
-          <span class="text-gray-400">
+          <span class="text-muted-foreground">
             vs sebelumnya {formatRupiah(stat.prev || 0)}
           </span>
         {/if}

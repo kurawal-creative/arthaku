@@ -52,8 +52,8 @@
     }).format(new Date(value));
 
   const typeClassMap: Record<string, string> = {
-    Masuk: "bg-emerald-100 text-emerald-700",
-    Keluar: "bg-rose-100 text-rose-700",
+    Masuk: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
+    Keluar: "bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300",
   };
 
   const isInLastDays = (value: string, days: number) => {

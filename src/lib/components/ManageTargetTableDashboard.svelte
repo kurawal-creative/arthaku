@@ -45,10 +45,10 @@
     }).format(value);
 
   const statusClassMap: Record<string, string> = {
-    Tercapai: "bg-[#dcfce7] text-[#16a34a]",
-    Berjalan: "bg-[#d1fae5] text-[#059669]",
-    "Hampir Tercapai": "bg-[#ecfccb] text-[#84cc16]",
-    Gagal: "bg-[#dcfce7] text-[#22c55e]",
+    Tercapai: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
+    Berjalan: "bg-teal-100 text-teal-700 dark:bg-teal-500/20 dark:text-teal-300",
+    "Hampir Tercapai": "bg-lime-100 text-lime-700 dark:bg-lime-500/20 dark:text-lime-300",
+    Gagal: "bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300",
   };
 
   const calculateProgress = (current: number, target: number) => {

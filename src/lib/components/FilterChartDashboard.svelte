@@ -99,7 +99,7 @@
           </button>
         {/each}
 
-        <button class="rounded-full p-2 hover:bg-gray-100 transition-colors">
+        <button class="rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
           <EllipsisVertical class="w-4 h-4" />
         </button>
       </div>

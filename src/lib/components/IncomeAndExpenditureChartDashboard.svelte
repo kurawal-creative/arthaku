@@ -101,7 +101,7 @@
           </button>
         {/each}
 
-        <button class="rounded-full p-2 hover:bg-gray-100 transition-colors">
+        <button class="rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
           <EllipsisVertical class="w-4 h-4" />
         </button>
       </div>
@@ -109,7 +109,7 @@
 
     <!-- Chart -->
     <Card.Content>
-      <Chart.Container config={chartConfig} class="h-53 w-full">
+      <Chart.Container config={chartConfig} class="h-54 w-full">
         <BarChart
           data={chartData}
           x="month"
