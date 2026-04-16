@@ -1,0 +1,70 @@
+<script lang="ts">
+  import CalendarIcon from '@lucide/svelte/icons/calendar'
+  import ChevronDown from '@lucide/svelte/icons/chevron-down'
+  import CloudDownload from '@lucide/svelte/icons/cloud-download'
+  import { getLocalTimeZone, today, type DateValue } from '@internationalized/date'
+  import { Button } from '$lib/components/ui/button'
+  import * as Popover from '$lib/components/ui/popover/index'
+  import CalendarPicker from '$lib/components/ui/calendar/calendar.svelte'
+  import TopbarBreadcrumb from '../TopbarBreadcrumb.svelte'
+
+  let open = $state(false)
+  let selectedDate = $state<DateValue>(today(getLocalTimeZone()))
+
+  const dateRange = $derived.by(() => formatRange(selectedDate))
+
+  function formatRange(endDate: DateValue) {
+    const startDate = endDate.subtract({ days: 29 })
+
+    const formatter = new Intl.DateTimeFormat('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    })
+
+    const start = formatter.format(startDate.toDate(getLocalTimeZone()))
+    const end = formatter.format(endDate.toDate(getLocalTimeZone()))
+
+    return `${start} - ${end}`
+  }
+
+  function handleDateChange(nextValue: DateValue | undefined) {
+    if (!nextValue) return
+    selectedDate = nextValue
+    open = false
+  }
+</script>
+
+<div class="space-y-6">
+  <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <!-- Breadcrumb -->
+    <TopbarBreadcrumb />
+
+    <!-- Actions -->
+    <div class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-end">
+      <!-- Date Picker -->
+      <Popover.Root bind:open>
+        <Popover.Trigger>
+          {#snippet child({ props })}
+            <Button {...props} variant="outline" class="h-9 justify-start gap-2 px-3 text-sm">
+              <CalendarIcon class="h-4 w-4 shrink-0" />
+              <span class="truncate">{dateRange}</span>
+              <ChevronDown class="h-4 w-4" />
+            </Button>
+          {/snippet}
+        </Popover.Trigger>
+
+        <Popover.Content class="mt-2 overflow-hidden rounded-xl border bg-background shadow-lg" align="end">
+          <CalendarPicker type="single" bind:value={selectedDate} maxValue={today(getLocalTimeZone())} onValueChange={handleDateChange} />
+        </Popover.Content>
+      </Popover.Root>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="space-y-1">
+    <h1 class="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">Analisis</h1>
+
+    <p class="max-w-2xl text-sm leading-relaxed text-muted-foreground">Analisis tabungan kamu dengan cara yang menyenangkan</p>
+  </div>
+</div>
