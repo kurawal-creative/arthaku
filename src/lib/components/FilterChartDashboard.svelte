@@ -1,22 +1,22 @@
 <script lang="ts">
-  import * as Card from "$lib/components/ui/card/index.js";
-  import * as Chart from "$lib/components/ui/chart/index.js";
-  import { scaleUtc } from "d3-scale";
-  import { curveNatural } from "d3-shape";
-  import { Area, AreaChart, LinearGradient } from "layerchart";
-  import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
-  import { onMount } from "svelte";
+  import * as Card from '$lib/components/ui/card/index.js'
+  import * as Chart from '$lib/components/ui/chart/index.js'
+  import { scaleUtc } from 'd3-scale'
+  import { curveNatural } from 'd3-shape'
+  import { Area, AreaChart, LinearGradient } from 'layerchart'
+  import EllipsisVertical from '@lucide/svelte/icons/ellipsis-vertical'
+  import { onMount } from 'svelte'
 
   const getLast6Months = () => {
-    const now = new Date();
-    const dates: Date[] = [];
+    const now = new Date()
+    const dates: Date[] = []
 
     for (let i = 5; i >= 0; i--) {
-      dates.push(new Date(now.getFullYear(), now.getMonth() - i, 1));
+      dates.push(new Date(now.getFullYear(), now.getMonth() - i, 1))
     }
 
-    return dates;
-  };
+    return dates
+  }
 
   const generateData = () => {
     return getLast6Months().map((date) => ({
@@ -25,43 +25,43 @@
       belanja: Math.floor(Math.random() * 2000000 + 700000),
       transport: Math.floor(Math.random() * 800000 + 200000),
       hiburan: Math.floor(Math.random() * 1000000 + 300000),
-    }));
-  };
+    }))
+  }
 
-  let chartData = $state(generateData());
+  let chartData = $state(generateData())
 
   onMount(() => {
-    const now = new Date();
-    const next = new Date();
+    const now = new Date()
+    const next = new Date()
 
-    next.setHours(0, 1, 0, 0);
-    if (now > next) next.setDate(next.getDate() + 1);
+    next.setHours(0, 1, 0, 0)
+    if (now > next) next.setDate(next.getDate() + 1)
 
-    const timeout = next.getTime() - now.getTime();
+    const timeout = next.getTime() - now.getTime()
 
     setTimeout(() => {
-      chartData = generateData();
+      chartData = generateData()
 
       setInterval(
         () => {
-          chartData = generateData();
+          chartData = generateData()
         },
         24 * 60 * 60 * 1000,
-      );
-    }, timeout);
-  });
+      )
+    }, timeout)
+  })
 
   const chartConfig = {
-    makan: { label: "Makan", color: "#16a34a" },
-    belanja: { label: "Belanja", color: "#22c55e" },
-    transport: { label: "Transport", color: "#059669" },
-    hiburan: { label: "Hiburan", color: "#84cc16" },
-  } satisfies Chart.ChartConfig;
+    makan: { label: 'Makan', color: '#16a34a' },
+    belanja: { label: 'Belanja', color: '#22c55e' },
+    transport: { label: 'Transport', color: '#059669' },
+    hiburan: { label: 'Hiburan', color: '#84cc16' },
+  } satisfies Chart.ChartConfig
 
-  type ChartKey = keyof typeof chartConfig;
-  const chartEntries = Object.entries(chartConfig) as [ChartKey, (typeof chartConfig)[ChartKey]][];
+  type ChartKey = keyof typeof chartConfig
+  const chartEntries = Object.entries(chartConfig) as [ChartKey, (typeof chartConfig)[ChartKey]][]
 
-  let hoveredKey = $state<ChartKey | null>(null);
+  let hoveredKey = $state<ChartKey | null>(null)
 
   const series = $derived(
     chartEntries
@@ -69,15 +69,15 @@
       .map(([key, item]) => ({
         key,
         label: item.label,
-        color: item.color ?? "var(--chart-1)",
+        color: item.color ?? 'var(--chart-1)',
       })),
-  );
+  )
 
   const formatAxisRupiah = (value: number) =>
-    new Intl.NumberFormat("id-ID", {
-      notation: "compact",
+    new Intl.NumberFormat('id-ID', {
+      notation: 'compact',
       maximumFractionDigits: 1,
-    }).format(value);
+    }).format(value)
 </script>
 
 <div class="rounded-2xl shadow-sm overflow-hidden">
@@ -117,7 +117,7 @@
           seriesLayout="stack"
           props={{
             xAxis: {
-              format: (v: Date) => v.toLocaleDateString("id-ID", { month: "short" }),
+              format: (v: Date) => v.toLocaleDateString('id-ID', { month: 'short' }),
             },
             yAxis: {
               format: (v: number) => formatAxisRupiah(v),
@@ -128,18 +128,18 @@
             <Chart.Tooltip
               indicator="dot"
               labelFormatter={(v: Date) =>
-                v.toLocaleDateString("id-ID", {
-                  month: "long",
-                  year: "numeric",
+                v.toLocaleDateString('id-ID', {
+                  month: 'long',
+                  year: 'numeric',
                 })}
             />
           {/snippet}
 
           {#snippet marks({ context })}
             {#each context.series.visibleSeries as s (s.key)}
-              <LinearGradient stops={[s.color ?? "", "color-mix(in lch, " + s.color + " 10%, transparent)"]} vertical>
+              <LinearGradient stops={[s.color ?? '', 'color-mix(in lch, ' + s.color + ' 10%, transparent)']} vertical>
                 {#snippet children({ gradient })}
-                  <Area seriesKey={s.key} curve={curveNatural} fillOpacity={0.4} line={{ class: "stroke-1" }} motion="tween" {...s.props} fill={gradient} />
+                  <Area seriesKey={s.key} curve={curveNatural} fillOpacity={0.4} line={{ class: 'stroke-1' }} motion="tween" {...s.props} fill={gradient} />
                 {/snippet}
               </LinearGradient>
             {/each}

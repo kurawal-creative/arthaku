@@ -1,31 +1,31 @@
 <script lang="ts">
-  import * as Card from "$lib/components/ui/card/index";
-  import * as Popover from "$lib/components/ui/popover/index";
-  import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
-  import Badge from "./ui/badge/badge.svelte";
+  import * as Card from '$lib/components/ui/card/index'
+  import * as Popover from '$lib/components/ui/popover/index'
+  import EllipsisVertical from '@lucide/svelte/icons/ellipsis-vertical'
+  import Badge from './ui/badge/badge.svelte'
 
   const insights = [
     {
-      id: "insight-1",
-      title: "Pengeluaran makan meningkat",
-      description: "Naik 25% dibanding minggu lalu. Pertimbangkan batasi makan di luar 3x/minggu.",
-      colorClass: "bg-rose-500",
+      id: 'insight-1',
+      title: 'Pengeluaran makan meningkat',
+      description: 'Naik 25% dibanding minggu lalu. Pertimbangkan batasi makan di luar 3x/minggu.',
+      colorClass: 'bg-rose-500',
       progress: 25,
-      progressClass: "bg-rose-500",
-      label: "Perlu perhatian",
-      labelClass: "bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300",
+      progressClass: 'bg-rose-500',
+      label: 'Perlu perhatian',
+      labelClass: 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300',
     },
     {
-      id: "insight-3",
-      title: "Target Laptop berjalan baik",
-      description: "Dana sudah mencapai 65%. Jika konsisten, target bisa tercapai 2 bulan lebih cepat.",
-      colorClass: "bg-emerald-500",
+      id: 'insight-3',
+      title: 'Target Laptop berjalan baik',
+      description: 'Dana sudah mencapai 65%. Jika konsisten, target bisa tercapai 2 bulan lebih cepat.',
+      colorClass: 'bg-emerald-500',
       progress: 65,
-      progressClass: "bg-emerald-500",
-      label: "On track",
-      labelClass: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
+      progressClass: 'bg-emerald-500',
+      label: 'On track',
+      labelClass: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300',
     },
-  ];
+  ]
 </script>
 
 <div class="rounded-2xl shadow-sm overflow-hidden h-99.5 flex flex-col">
