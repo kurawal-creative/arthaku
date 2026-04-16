@@ -78,7 +78,7 @@
     <Card.Header class="flex items-center justify-between">
       <div>
         <Card.Title>Riwayat Transaksi</Card.Title>
-        <Card.Description>Menampilkan transaksi 30 hari terakhir (maksimal 15 data)</Card.Description>
+        <Card.Description>Menampilkan transaksi 30 hari terakhir</Card.Description>
       </div>
       <div>
         <Button href="/dashboard" class="border rounded-lg px-2 py-1.5 text-sm bg-primary text-white hover:bg-primary-hover font-normal">Lihat semua</Button>

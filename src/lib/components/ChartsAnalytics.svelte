@@ -1,6 +1,7 @@
 <script lang="ts">
   import * as Card from '$lib/components/ui/card/index.js'
   import * as Chart from '$lib/components/ui/chart/index.js'
+  import { IsMobile } from '$lib/hooks/is-mobile.svelte.js'
   import { scaleBand } from 'd3-scale'
   import { BarChart } from 'layerchart'
   import EllipsisVertical from '@lucide/svelte/icons/ellipsis-vertical'
@@ -9,21 +10,35 @@
 
   const formatNumber = (value: number) => new Intl.NumberFormat('id-ID').format(value)
 
-  const getLast12Months = () => {
+  const isMobile = new IsMobile()
+
+  const getLastMonths = (count: number) => {
     const now = new Date()
-    return Array.from({ length: 12 }, (_, i) => {
-      return new Date(now.getFullYear(), now.getMonth() - (11 - i), 1)
+    return Array.from({ length: count }, (_, i) => {
+      return new Date(now.getFullYear(), now.getMonth() - (count - 1 - i), 1)
     })
   }
 
-  const generateData = () =>
-    getLast12Months().map((date) => ({
+  const chartMonthCount = $derived(isMobile.current ? 6 : 12)
+
+  const generateData = (monthCount: number) =>
+    getLastMonths(monthCount).map((date) => ({
       date,
       pemasukan: Math.floor(Math.random() * 5000000 + 3000000),
       pengeluaran: Math.floor(Math.random() * 3000000 + 1000000),
     }))
 
-  let chartData = $state(generateData())
+  type ChartPoint = {
+    date: Date
+    pemasukan: number
+    pengeluaran: number
+  }
+
+  let chartData = $state<ChartPoint[]>([])
+
+  $effect(() => {
+    chartData = generateData(chartMonthCount)
+  })
 
   onMount(() => {
     const now = new Date()
@@ -31,15 +46,18 @@
     next.setHours(0, 1, 0, 0)
     if (now > next) next.setDate(next.getDate() + 1)
 
-    setTimeout(() => {
-      chartData = generateData()
-      setInterval(
-        () => {
-          chartData = generateData()
-        },
-        24 * 60 * 60 * 1000,
-      )
+    let intervalId: ReturnType<typeof setInterval> | undefined
+    const timeoutId = setTimeout(() => {
+      chartData = generateData(chartMonthCount)
+      intervalId = setInterval(() => {
+        chartData = generateData(chartMonthCount)
+      }, 24 * 60 * 60 * 1000)
     }, next.getTime() - now.getTime())
+
+    return () => {
+      clearTimeout(timeoutId)
+      if (intervalId) clearInterval(intervalId)
+    }
   })
 
   const chartConfig: Chart.ChartConfig = {
@@ -60,7 +78,7 @@
     <Card.Header class="flex items-center justify-between">
       <div>
         <Card.Title>Tren Keuangan</Card.Title>
-        <Card.Description>1 Tahun Terakhir</Card.Description>
+        <Card.Description>{#if isMobile.current} 6 Bulan Terakhir {:else} 1 Tahun Terakhir {/if}</Card.Description>
       </div>
 
       <div class="flex items-center gap-4">

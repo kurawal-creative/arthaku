@@ -1,4 +1,5 @@
 <script lang="ts">
+ import { SvelteKitTopLoader } from 'sveltekit-top-loader';
  import * as Sidebar from "$lib/components/ui/sidebar/index.js";
  import AppSidebar from "$lib/components/AppSidebar.svelte";
  
@@ -10,5 +11,6 @@
  <main class="w-full">
   <!-- <Sidebar.Trigger /> -->
   {@render children?.()}
- </main>
+</main>
+<SvelteKitTopLoader color="#408a71" showSpinner={false} />
 </Sidebar.Provider>

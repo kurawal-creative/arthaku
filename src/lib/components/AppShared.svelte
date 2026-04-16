@@ -58,7 +58,7 @@
       items: [
         {
           title: 'Profil',
-          path: '#/profile',
+          path: '/dashboard/profile',
           icon: UserIcon,
         },
         {

@@ -39,7 +39,7 @@
       <Popover.Root>
         <Popover.Trigger>
           {#snippet child({ props })}
-            <button {...props} type="button" class="rounded-full p-1 hover:bg-muted transition-colors" aria-label="Menu target">
+            <button {...props} type="button" class="rounded-full p-2 hover:bg-muted transition-colors" aria-label="Menu target">
               <EllipsisVertical class="w-4 h-4" />
             </button>
           {/snippet}

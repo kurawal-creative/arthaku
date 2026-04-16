@@ -83,18 +83,18 @@
   <div class="divide-y">
     {#each insights as insight}
       {@const s = styles[insight.type]}
-      <div class="flex items-start gap-3 pl-1 pr-5 py-4 transition-colors hover:bg-muted/30">
+      <div class="flex items-start md:items-center gap-3 pl-1 pr-5 py-4 transition-colors hover:bg-muted/30">
         <!-- Indicator bar kiri -->
         <div class="mt-1 h-full w-0.5 self-stretch rounded-full {s.indicator}"></div>
 
         <!-- Icon -->
         <div class="shrink-0 rounded-lg p-2 {s.icon}" style={insight.type === 'success' ? 'background-color: var(--color-primary-light)' : ''}>
-          <insight.icon class="h-4 w-4" />
+          <insight.icon class="h-4.5 w-4.5" />
         </div>
 
         <!-- Konten -->
-        <div class="min-w-0 flex-1 space-y-0.5">
-          <div class="flex items-center justify-between gap-2">
+        <div class="min-w-0 flex-1 space-y-0.5 md:space-y-0">
+          <div class="flex items-center justify-between">
             <p class="text-sm font-medium text-foreground">{insight.title}</p>
             {#if insight.badge}
               <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold {s.badge}" style={insight.type === 'success' ? 'background-color: var(--color-primary-light); color: var(--color-primary)' : ''}>
