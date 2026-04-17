@@ -2,7 +2,7 @@
   import * as Card from '$lib/components/ui/card/index'
   import * as Popover from '$lib/components/ui/popover/index'
   import EllipsisVertical from '@lucide/svelte/icons/ellipsis-vertical'
-  import Badge from './ui/badge/badge.svelte'
+  import Badge from '../ui/badge/badge.svelte'
 
   const insights = [
     {

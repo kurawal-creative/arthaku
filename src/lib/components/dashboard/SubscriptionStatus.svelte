@@ -1,9 +1,9 @@
 <script>
-  import Button from "./ui/button/button.svelte";
+  import Button from "../ui/button/button.svelte";
 </script>
 
 <div
-  class="space-y-3 rounded-2xl bg-card p-4 shadow-sm"
+  class="space-y-2 rounded-2xl bg-card p-4 shadow-sm"
 >
   <h2 class="text-base font-semibold text-foreground">Langganan</h2>
 

@@ -1,11 +1,11 @@
 <script>
   import AppTopbar from "$lib/components/AppTopbar.svelte";
-  import DashboardStatsCard from "$lib/components/DashboardStatsCard.svelte";
-  import FilterChartDashboard from "$lib/components/FilterChartDashboard.svelte";
-  import FinancialInsightCardDashboard from "$lib/components/FinancialInsightCardDashboard.svelte";
-  import HistoryTransactionDashboard from "$lib/components/HistoryTransactionDashboard.svelte";
-  import IncomeAndExpenditureChartDashboard from "$lib/components/IncomeAndExpenditureChartDashboard.svelte";
-  import ManageTargetTableDashboard from "$lib/components/ManageTargetTableDashboard.svelte";
+  import DashboardStatsCard from "$lib/components/dashboard/DashboardStatsCard.svelte";
+  import FilterChartDashboard from "$lib/components/dashboard/FilterChartDashboard.svelte";
+  import FinancialInsightCardDashboard from "$lib/components/dashboard/FinancialInsightCardDashboard.svelte";
+  import HistoryTransactionDashboard from "$lib/components/dashboard/HistoryTransactionDashboard.svelte";
+  import IncomeAndExpenditureChartDashboard from "$lib/components/dashboard/IncomeAndExpenditureChartDashboard.svelte";
+  import ManageTargetTableDashboard from "$lib/components/dashboard/ManageTargetTableDashboard.svelte";
 </script>
 
 <main class="p-4 md:p-6 space-y-4">

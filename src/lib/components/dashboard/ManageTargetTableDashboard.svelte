@@ -3,7 +3,7 @@
   import * as Popover from "$lib/components/ui/popover/index";
   import * as Table from "$lib/components/ui/table/index";
   import EllipsisVertical from "@lucide/svelte/icons/ellipsis-vertical";
-  import Badge from "./ui/badge/badge.svelte";
+  import Badge from "../ui/badge/badge.svelte";
 
   // Data Mock untuk Target
   const targets = [

@@ -1,12 +1,12 @@
 <script lang="ts">
   import * as ButtonGroup from "$lib/components/ui/button-group/index";
-  import { Button } from "./ui/button";
+  import { Button } from "../ui/button";
   import Calendar from "@lucide/svelte/icons/calendar";
   import RangeCalendar from "$lib/components/ui/range-calendar/range-calendar.svelte";
   import * as Popover from "$lib/components/ui/popover/index";
   import ChevronDown from "@lucide/svelte/icons/chevron-down";
 
-  import { getLocalTimeZone, startOfMonth, today, type DateValue } from "@internationalized/date";
+  import { getLocalTimeZone, today, type DateValue } from "@internationalized/date";
   import type { DateRange } from "bits-ui";
 
   type Preset = {
@@ -77,7 +77,6 @@
     const end = today(getLocalTimeZone());
     setRange(end.subtract({ days: preset.days - 1 }), end);
   }
-
 </script>
 
 <div class="flex items-center">
@@ -90,12 +89,7 @@
     <Popover.Root bind:open>
       <Popover.Trigger>
         {#snippet child({ props })}
-          <Button
-            {...props}
-            variant="outline"
-            class="h-9 border-l-0 gap-2 px-3 py-0 text-sm"
-            aria-label={`Pilih range tanggal, preset aktif ${selectedPreset}`}
-          >
+          <Button {...props} variant="outline" class="h-9 border-l-0 gap-2 px-3 py-0 text-sm" aria-label={`Pilih range tanggal, preset aktif ${selectedPreset}`}>
             <span class="truncate">{selectedPreset}</span>
             <ChevronDown class="h-4 w-4" />
           </Button>

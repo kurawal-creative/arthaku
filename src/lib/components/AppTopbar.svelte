@@ -1,7 +1,8 @@
 <script>
-  import ButtonExportDashboard from './ButtonExportDashboard.svelte'
-  import DateRangeDashboard from './DateRangeDashboard.svelte'
-  import SearchDashboard from './SearchDashboard.svelte'
+  import ButtonExportDashboard from "./dashboard/ButtonExportDashboard.svelte";
+  import DateRangeDashboard from "./dashboard/DateRangeDashboard.svelte";
+
+  import SearchDashboard from "./SearchDashboard.svelte";
 </script>
 
 <nav class="w-full mb-6">

@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as Card from "$lib/components/ui/card/index";
   import * as Table from "$lib/components/ui/table/index";
-  import Button from "./ui/button/button.svelte";
+  import Button from "../ui/button/button.svelte";
 
   const DAYS_LIMIT = 30;
   const MAX_ROWS = 15;

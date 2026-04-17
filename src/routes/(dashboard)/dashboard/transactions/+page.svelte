@@ -1,7 +1,7 @@
 <script lang="ts">
-  import SummaryTransactions from "$lib/components/SummaryTransactions.svelte";
+  import SummaryTransactions from "$lib/components/dashboard/SummaryTransactions.svelte";
   import TableTransactions from "$lib/components/tables/TableTransactions.svelte";
-  import TopbarTransactions from "$lib/components/topbars/TopbarTransactions.svelte";
+  import TopbarPageHeader from "$lib/components/TopbarPageHeader.svelte";
   import type { Transaction } from "$lib/types/transaction";
 
   let search = $state("");
@@ -72,7 +72,7 @@
 
 <main class="p-4 md:p-6 space-y-6">
   <!-- Header -->
-  <TopbarTransactions />
+  <TopbarPageHeader title="Transaksi" description="Kelola pemasukan, pengeluaran, dan riwayat transaksi dalam satu tampilan yang bersih dan fokus." showDatePicker showExportButton />
 
   <!-- Summary -->
   <SummaryTransactions {filteredInvoices} {totalAmount} />
