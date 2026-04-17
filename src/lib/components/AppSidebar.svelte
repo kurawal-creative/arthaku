@@ -7,12 +7,15 @@
   import SettingsIcon from "@lucide/svelte/icons/settings";
   import ThemeSwitcher from "./ThemeSwitcher.svelte";
   import CustomTrigger from "./CustomTrigger.svelte";
+  import SearchDashboard from "./SearchDashboard.svelte";
 
   function isActiveItem(path: string | undefined, pathname: string): boolean {
     if (!path) return false;
     if (path.startsWith("#")) return false;
     return pathname === path;
   }
+
+  const showSidebarSearch = $derived(page.url.pathname !== "/dashboard");
 </script>
 
 <Sidebar class={cn("*:data-[slot=sidebar-inner]:bg-background", "transition-[left,right,top,width] group-data-[collapsible=offcanvas]:top-[calc(var(--app-header-height)*0.5)]")} collapsible="offcanvas" variant="sidebar">
@@ -24,6 +27,11 @@
   </SidebarHeader>
 
   <SidebarContent>
+    {#if showSidebarSearch}
+      <SidebarGroup>
+        <SearchDashboard />
+      </SidebarGroup>
+    {/if}
     {#each navGroups as group (group.label)}
       <SidebarGroup>
         <SidebarGroupLabel>{group.label}</SidebarGroupLabel>

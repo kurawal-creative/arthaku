@@ -16,8 +16,8 @@
     showExportButton = false,
     exportLabel = "Export",
   } = $props<{
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
     showDatePicker?: boolean;
     showExportButton?: boolean;
     exportLabel?: string;

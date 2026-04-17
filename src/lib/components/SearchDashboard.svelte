@@ -33,7 +33,7 @@
 
   <InputGroupAddon align="inline-end">
     <KbdGroup>
-      <Kbd>Ctrl</Kbd>
+      <Kbd>⌘</Kbd>
       <Kbd>K</Kbd>
     </KbdGroup>
   </InputGroupAddon>

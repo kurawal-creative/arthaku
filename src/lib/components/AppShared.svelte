@@ -76,6 +76,11 @@
           path: "/dashboard/integrations",
           icon: PlugIcon,
         },
+        {
+          title: "Docs & Support",
+          path: "/dashboard/docs",
+          icon: MessageCircleIcon,
+        },
       ],
     },
   ];
