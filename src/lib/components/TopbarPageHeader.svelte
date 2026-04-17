@@ -7,6 +7,7 @@
   import * as Popover from "$lib/components/ui/popover/index";
   import CalendarPicker from "$lib/components/ui/calendar/calendar.svelte";
   import TopbarBreadcrumb from "./TopbarBreadcrumb.svelte";
+  import CustomTrigger from "./CustomTrigger.svelte";
 
   let {
     title,
@@ -53,7 +54,10 @@
 <div class="space-y-6">
   {#if hasActions}
     <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <TopbarBreadcrumb />
+      <div class="flex items-center">
+        <CustomTrigger place="navbar" />
+        <TopbarBreadcrumb />
+      </div>
 
       <div class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-end">
         {#if showDatePicker}

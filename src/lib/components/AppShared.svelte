@@ -72,11 +72,6 @@
       label: "Integrasi & Sistem",
       items: [
         {
-          title: "Bot & Chat",
-          path: "/dashboard/bot",
-          icon: MessageCircleIcon,
-        },
-        {
           title: "Integrasi",
           path: "/dashboard/integrations",
           icon: PlugIcon,
