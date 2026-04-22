@@ -5,6 +5,7 @@ import { ZodToJsonSchemaConverter } from '@orpc/zod/zod4'
 import { SmartCoercionPlugin } from '@orpc/json-schema'  
 import { OpenAPIReferencePlugin } from '@orpc/openapi/plugins'  
 import { router } from '$lib/router'  
+import { auth } from '$lib/auth'
   
 const handler = new OpenAPIHandler(router, {  
   interceptors: [  
@@ -24,9 +25,16 @@ const handler = new OpenAPIHandler(router, {
 })  
   
 const handle: RequestHandler = async ({ request }) => {  
+    const session = await auth.api.getSession({  
+    headers: request.headers,  
+  })  
+
   const { response } = await handler.handle(request, {  
     prefix: '/api',  
-    context: {},  
+    context: {  
+      user: session?.user,  
+      session: session?.session,  
+    },  
   })  
   return response ?? new Response('Not Found', { status: 404 })  
 }  

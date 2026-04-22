@@ -2,6 +2,7 @@ import { auth } from '$lib/auth';
 import { svelteKitHandler } from 'better-auth/svelte-kit';
 import { building } from '$app/environment';
 import type { Handle } from '@sveltejs/kit';
+import './lib/orpc.server'
 
 export const handle: Handle = async ({ event, resolve }) => {
     const pathname = event.url.pathname;
@@ -19,9 +20,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     });
 
     if (session) {
-        // @ts-ignore
         event.locals.user = session.user;
-        // @ts-ignore
         event.locals.session = session.session;
     }
 
