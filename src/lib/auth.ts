@@ -1,8 +1,8 @@
 import { betterAuth } from 'better-auth';
-import { PrismaClient } from '@prisma/client';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { sveltekitCookies } from 'better-auth/svelte-kit';
 import { getRequestEvent } from '$app/server';
+import { prisma } from './prisma';
 
 function requireEnv(
   key:
@@ -22,8 +22,6 @@ function requireEnv(
 const betterAuthSecret = requireEnv("BETTER_AUTH_SECRET");
 // Menggunakan process.env alih-alih env dari SvelteKit
 const betterAuthUrl = process.env.BETTER_AUTH_URL ?? "http://localhost:5173";
-
-const prisma = new PrismaClient();
 
 export const auth = betterAuth({
     baseURL: betterAuthUrl,
