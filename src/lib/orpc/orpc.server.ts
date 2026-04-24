@@ -1,7 +1,7 @@
 import { createJsonifiedRouterClient } from "@orpc/openapi";
 import { getRequestEvent } from "$app/server";
-import { auth } from "./auth"; // better-auth instance
-import { router } from "./router";
+import { auth } from "../auth"; // better-auth instance
+import { router } from ".";
 
 if (typeof window !== "undefined") {
   throw new Error("This file should only be imported on the server");

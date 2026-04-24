@@ -4,8 +4,8 @@ import type { RequestHandler } from '@sveltejs/kit'
 import { ZodToJsonSchemaConverter } from '@orpc/zod/zod4'  
 import { SmartCoercionPlugin } from '@orpc/json-schema'  
 import { OpenAPIReferencePlugin } from '@orpc/openapi/plugins'  
-import { router } from '$lib/server/router'  
-import { auth } from '$lib/server/auth'
+import { router } from '$lib/orpc'  
+import { auth } from '$lib/auth'
   
 const handler = new OpenAPIHandler(router, {  
   interceptors: [  
