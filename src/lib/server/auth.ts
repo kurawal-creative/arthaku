@@ -1,8 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { sveltekitCookies } from 'better-auth/svelte-kit';
-import { getRequestEvent } from '$app/server';
 import { prisma } from './prisma';
+import { ObjectId } from 'mongodb';
 
 function requireEnv(
   key:
@@ -29,6 +28,13 @@ export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: 'mongodb',
     }),
+    advanced: {
+		database: {
+			generateId: () => {
+				return new ObjectId().toString();
+			},
+		},
+	},
     emailAndPassword: {
         enabled: true,
     },
@@ -38,6 +44,5 @@ export const auth = betterAuth({
             clientId: requireEnv('GOOGLE_CLIENT_ID'),
             clientSecret: requireEnv('GOOGLE_CLIENT_SECRET'),
         },
-    },
-    plugins: [sveltekitCookies(getRequestEvent)],
+    }
 });

@@ -4,6 +4,7 @@ import type { Session, User } from "better-auth";
 export interface ORPCContext {
   user?: User;
   session?: Session;
+  headers?: Headers;
 }
 
 // Public: semua bisa akses

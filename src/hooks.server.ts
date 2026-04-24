@@ -1,8 +1,8 @@
-import { auth } from '$lib/auth';
+import { auth } from '$lib/server/auth';
 import { svelteKitHandler } from 'better-auth/svelte-kit';
 import { building } from '$app/environment';
 import type { Handle } from '@sveltejs/kit';
-import './lib/orpc.server'
+import './lib/server/orpc.server'
 
 export const handle: Handle = async ({ event, resolve }) => {
     const pathname = event.url.pathname;

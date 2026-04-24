@@ -13,8 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// !==! ============================= !==!
+// !! AUTHENTICATION & USER MANAGEMENT
+// !==! ============================= !==!
+
 model User {
-  id            String    @id @map("_id")
+  id            String    @id @map("_id") @db.ObjectId
   name          String
   email         String
   emailVerified Boolean   @default(false)
@@ -24,19 +28,29 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  // balance 
+  balance Float @default(0)
+
+  integration       Integration[]
+  transactions      Transaction[]
+  dailySummaries    DailySummary[]
+  monthlySummaries  MonthlySummary[]
+  categorySummaries CategorySummary[]
+  goals             Goal[]
+
   @@unique([email])
   @@map("user")
 }
 
 model Session {
-  id        String   @id @map("_id")
+  id        String   @id @map("_id") @db.ObjectId
   expiresAt DateTime
   token     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ipAddress String?
   userAgent String?
-  userId    String
+  userId    String   @db.ObjectId
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
@@ -45,10 +59,10 @@ model Session {
 }
 
 model Account {
-  id                    String    @id @map("_id")
+  id                    String    @id @map("_id") @db.ObjectId
   accountId             String
   providerId            String
-  userId                String
+  userId                String    @db.ObjectId
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
@@ -65,7 +79,7 @@ model Account {
 }
 
 model Verification {
-  id         String   @id @map("_id")
+  id         String   @id @map("_id") @db.ObjectId
   identifier String
   value      String
   expiresAt  DateTime
@@ -74,4 +88,158 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+// !==! ============================= !==!
+// !! INTEGRATION
+// !==! ============================= !==!
+
+enum IntegrationType {
+  WHATSAPP
+  TELEGRAM
+}
+
+model Integration {
+  id   String          @id @default(auto()) @map("_id") @db.ObjectId
+  type IntegrationType
+
+  // Ubah penamaan agar lebih universal
+  botId     String // WA: Nomor WA Bot | TG: Username Bot (misal: @arthaku_bot)
+  accountId String // WA: Nomor WA User | TG: Chat ID User (misal: "123456789")
+
+  code String @unique // Kode verifikasi (misal: "ARTHA-123")
+
+  // Tambahan status agar lebih aman
+  isActive Boolean @default(false) // false = belum diverifikasi, true = sukses binding
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String? @unique @db.ObjectId
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@map("integration")
+}
+
+// !==! ============================= !==!
+// !! GOALS SYSTEM
+// !==! ============================= !==!
+
+model Goal {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String    @db.ObjectId
+  name          String // Beli Laptop, Liburan, dll
+  targetAmount  Float
+  currentAmount Float     @default(0) // Diupdate tiap ada transaksi masuk ke target ini
+  deadline      DateTime? // Untuk "Estimasi Waktu"
+  status        String    @default("Berjalan") // Berjalan, Tercapai, Gagal, Hampir Tercapai
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@map("goals")
+}
+
+// !==! ============================= !==!
+// !! TRANSACTION SYSTEM
+// !==! ============================= !==!
+
+enum TransactionType {
+  INCOME // Masuk (Nabung)
+  EXPENSE // Keluar (Jajan/Bayar tagihan)
+}
+
+enum PaymentMethod {
+  CASH
+  TRANSFER
+  QRIS
+  DEBIT_CARD
+  CREDIT_CARD
+}
+
+enum TransactionStatus {
+  PENDING // Menunggu konfirmasi (Flow Bot)
+  CONFIRMED // Saldo resmi tercatat
+  REJECTED // Dibatalkan user/sistem
+}
+
+enum SourceType {
+  BOT // Input via WhatsApp
+  DASHBOARD // Input manual
+}
+
+model Transaction {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  amount Float             @default(0)
+  method PaymentMethod     @default(CASH)
+  type   TransactionType   @default(INCOME)
+  status TransactionStatus @default(PENDING)
+  source SourceType        @default(BOT)
+
+  category    String? // Misal: "Gaji", "Makanan", "Hiburan"
+  description String? // Catatan atau teks dari WhatsApp
+  imageUrl    String? // Bukti nota/transfer
+  messageId   String? // ID pesan WA untuk tracking flow bot
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  goal      Goal     @relation(fields: [goalId], references: [id])
+  goalId    String   @db.ObjectId
+
+  // Indexing agar query jutaan data tetap kencang
+  @@index([userId, status, createdAt])
+  @@map("transactions")
+}
+
+// !==! ============================= !==!
+// !! STATISTICS & SUMMARY (PRE-CALCULATED)
+// !==! ============================= !==!
+
+model DailySummary {
+  id     String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId String   @db.ObjectId
+  date   DateTime // Jam di-reset ke 00:00:00:000 UTC
+
+  totalIn  Float @default(0) // Total INCOME confirmed
+  totalOut Float @default(0) // Total EXPENSE confirmed
+  count    Int   @default(0) // Jumlah transaksi harian
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@map("daily_summary")
+}
+
+model MonthlySummary {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  month  Int // 1-12
+  year   Int // Contoh: 2026
+
+  totalIn   Float @default(0)
+  totalOut  Float @default(0)
+  balance   Float @default(0) // Saldo akhir pada bulan tersebut (Snapshot)
+  netAmount Float @default(0)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, month, year])
+  @@map("monthly_summary")
+}
+
+model CategorySummary {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String @db.ObjectId
+  category String // Misal: "Makan", "Transport", "Hiburan"
+  month    Int
+  year     Int
+  total    Float  @default(0) // Akumulasi pengeluaran per kategori
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, category, month, year])
+  @@map("category_summary")
 }
